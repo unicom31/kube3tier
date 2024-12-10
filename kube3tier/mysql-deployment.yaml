@@ -1,4 +1,27 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-config
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS pratice_board;
+    
+    USE pratice_board;
+    
+    CREATE TABLE IF NOT EXISTS post
+
+    CREATE TABLE post (
+      `num` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `title` VARCHAR(50) NOT NULL,
+      `writer` VARCHAR(50) NOT NULL,
+      `content` TEXT NOT NULL,
+      `reg_date` DATETIME NOT NULL
+    );
+    INSERT INTO post (title, writer, content, reg_date)
+              VALUES ('first', 'kwjeon', 'yaml test', '2024-12-09');
+    
+---
+apiVersion: v1
 data:
   DB_Password: cm9vdA==
 kind: Secret
@@ -84,7 +107,12 @@ spec:
           volumeMounts:
           - name: mysql-volume
             mountPath: /var/lib/mysql
+          - name: init-sql-volume
+            mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: mysql-volume
         persistentVolumeClaim:
          claimName: mysql-pvc
+      - name: init-sql-volume
+         configMap:
+           name: mysql-init-config
