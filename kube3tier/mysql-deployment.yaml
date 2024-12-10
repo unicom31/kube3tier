@@ -20,17 +20,16 @@ data:
     VALUES ('first', 'kwjeon', 'yaml test', '2024-12-09');
 ---
 apiVersion: v1
-data:
-  DB_Password: cm9vdA==
 kind: Secret
 metadata:
-  creationTimestamp: null
   name: db-secret
---- 
+data:
+  DB_Password: cm9vdA==
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv 
+  name: mysql-pv
 spec:
   volumeMode: Filesystem
   capacity:
@@ -38,12 +37,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: ""
   hostPath:
-   path: /mysql/mysql_data
-  claimRef:
-   name: mysql-pvc
-   namespace: default
+    path: /mysql/mysql_data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -57,7 +52,6 @@ spec:
   resources:
     requests:
       storage: 3Gi
-  storageClassName: ""
 ---
 apiVersion: v1
 kind: Service
@@ -65,8 +59,6 @@ metadata:
   name: mysql
 spec:
   type: NodePort
-#  type: LoadBalancer
-  clusterIP: 172.17.30.100
   selector:
     app: mysql-db
   ports:
@@ -101,16 +93,16 @@ spec:
                   name: db-secret
                   key: DB_Password
             - name: MYSQL_DATABASE
-              value: myapp
+              value: pratice_board
           volumeMounts:
-          - name: mysql-volume
-            mountPath: /var/lib/mysql
-          - name: init-sql-volume
-            mountPath: /docker-entrypoint-initdb.d
+            - name: mysql-volume
+              mountPath: /var/lib/mysql
+            - name: init-sql-volume
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: mysql-volume
-        persistentVolumeClaim:
-         claimName: mysql-pvc
-      - name: init-sql-volume
-         configMap:
-           name: mysql-init-config
+        - name: mysql-volume
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+        - name: init-sql-volume
+          configMap:
+            name: mysql-init-config
