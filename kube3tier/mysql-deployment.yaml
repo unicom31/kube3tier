@@ -15,9 +15,9 @@ data:
       `content` TEXT NOT NULL,
       `reg_date` DATETIME NOT NULL
     );
-    INSERT INTO post (title, writer, content, reg_date)
-              VALUES ('first', 'kwjeon', 'yaml test', '2024-12-09');
     
+    INSERT INTO post (title, writer, content, reg_date)
+    VALUES ('first', 'kwjeon', 'yaml test', '2024-12-09');
 ---
 apiVersion: v1
 data:
