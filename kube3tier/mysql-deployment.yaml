@@ -8,9 +8,7 @@ data:
     
     USE pratice_board;
     
-    CREATE TABLE IF NOT EXISTS post
-
-    CREATE TABLE post (
+    CREATE TABLE IF NOT EXISTS post(
       `num` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `title` VARCHAR(50) NOT NULL,
       `writer` VARCHAR(50) NOT NULL,
