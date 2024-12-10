@@ -19,7 +19,7 @@ data:
     INSERT INTO post (title, writer, content, reg_date)
     VALUES ('first', 'kwjeon', 'yaml test', '2024-12-09');
     
-    COMMIOT;
+    COMMIT;
 ---
 apiVersion: v1
 kind: Secret
