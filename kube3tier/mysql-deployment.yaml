@@ -61,6 +61,7 @@ metadata:
   name: mysql
 spec:
   type: NodePort
+  clusterIP: 172.17.30.100
   selector:
     app: mysql-db
   ports:
